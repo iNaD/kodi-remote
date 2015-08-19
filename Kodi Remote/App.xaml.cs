@@ -30,6 +30,7 @@ namespace Kodi_Remote
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Settings.Init();
         }
 
         /// <summary>
@@ -99,6 +100,7 @@ namespace Kodi_Remote
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
+            Settings.Save();
             deferral.Complete();
         }
     }

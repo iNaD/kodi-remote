@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Kodi_Remote.HostForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kodi_Remote"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Margin="10">
+            <TextBox x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname"/>
+            <TextBox x:Name="port" Margin="0,37,0,0" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" />
+            <TextBox x:Name="username" Margin="0,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username"/>
+            <TextBox x:Name="password" Margin="0,111,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Password"/>
+            <Grid Margin="0" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="connect" Content="Test Connection" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="connect_Click" Margin="0,0,3,0"/>
+                <Button x:Name="save" Content="Save" HorizontalAlignment="Stretch" Margin="3,0,0,0" VerticalAlignment="Bottom" Grid.Column="1" Click="save_Click"/>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Page>
