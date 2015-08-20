@@ -5,4 +5,13 @@
     xmlns:local="using:Kodi_Remote"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

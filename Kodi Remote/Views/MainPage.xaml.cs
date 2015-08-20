@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 
-namespace Kodi_Remote
+namespace Kodi_Remote.Views
 {
     public sealed partial class MainPage : Page
     {

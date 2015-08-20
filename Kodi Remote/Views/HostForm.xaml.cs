@@ -18,20 +18,30 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 
-namespace Kodi_Remote
+namespace Kodi_Remote.Views
 {
     public sealed partial class HostForm : Page
     {
 
         public HostForm()
         {
+            Debug.WriteLine("Initializing HostForm");
             this.InitializeComponent();
-            if (Settings.hosts.Count > 0) {
-                Host host = Settings.hosts.ElementAt(0);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            Debug.WriteLine("Got Host data");
+
+            Host host = e.Parameter as Host;
+            if (host != null)
+            {
                 this.hostname.Text = host.hostname;
                 this.port.Text = host.port;
                 this.username.Text = host.username;
-                this.password.Text = host.password;
+                this.password.Password = host.password;
             }
         }
 
@@ -47,7 +57,7 @@ namespace Kodi_Remote
 
             string port = this.port.Text;
             string username = this.username.Text;
-            string password = this.password.Text;
+            string password = this.password.Password;
 
             var host = new Host(hostname, port, username, password);
 
@@ -78,7 +88,7 @@ namespace Kodi_Remote
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            Host host = new Host(this.hostname.Text, this.port.Text, this.username.Text, this.password.Text);
+            Host host = new Host(this.hostname.Text, this.port.Text, this.username.Text, this.password.Password);
 
             Settings.AddHost(host);
 

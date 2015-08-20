@@ -3,30 +3,58 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Kodi_Remote"
+    xmlns:controls="using:Kodi_Remote.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <DataTemplate x:Key="NavListItem" x:DataType="local:SidebarNavItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <FontIcon x:Name="Glyph" FontSize="16" Glyph="{x:Bind SymbolAsChar}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Label}"/>
+                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid VerticalAlignment="Top">
-            <ToggleButton x:Name="ToggleSidebar" Content="&#xE700;" VerticalAlignment="Top" IsChecked="{Binding IsPaneOpen, ElementName=SplitView, FallbackValue=false, Mode=TwoWay}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26.667"/>
+            <ToggleButton x:Name="ToggleSidebar" Style="{StaticResource SplitViewTogglePaneButtonStyle}" IsChecked="{Binding IsPaneOpen, ElementName=SplitView, FallbackValue=false, Mode=TwoWay}"/>
         </Grid>
-        <SplitView x:Name="SplitView" Margin="0,40,0,0">
+        <SplitView x:Name="SplitView" DisplayMode="Inline" IsTabStop="False" Margin="0,48,0,0">
             <SplitView.Pane>
-                <ListView x:Name="Navigation">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:SidebarNavItem">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <FontIcon x:Name="Glyph" FontSize="16" Glyph="{x:Bind SymbolAsChar}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Label}"/>
-                                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <controls:NavListView x:Name="Navigation"
+                                      ContainerContentChanging="NavMenuItemContainerContentChanging"
+                                      ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
+                                      ItemTemplate="{StaticResource NavListItem}"
+                                      ItemInvoked="NavMenuList_ItemInvoked"/>
             </SplitView.Pane>
             <Frame x:Name="content" />
         </SplitView>

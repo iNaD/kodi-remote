@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Kodi_Remote.Views.HostListing"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kodi_Remote"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="HostListItem" x:DataType="local:HostListItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <FontIcon x:Name="Glyph" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Host.hostname}"/>
+                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Host.hostname}" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListView x:Name="HostsList" Margin="10" ItemTemplate="{StaticResource HostListItem}" ItemClick="HostsList_ItemClick" IsItemClickEnabled="True"/>
+    </Grid>
+</Page>

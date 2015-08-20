@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Kodi_Remote.HostForm"
+    x:Class="Kodi_Remote.Views.HostForm"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Kodi_Remote"
@@ -12,7 +12,7 @@
             <TextBox x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname"/>
             <TextBox x:Name="port" Margin="0,37,0,0" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" />
             <TextBox x:Name="username" Margin="0,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username"/>
-            <TextBox x:Name="password" Margin="0,111,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Password"/>
+            <PasswordBox x:Name="password" Margin="0,111,0,0" VerticalAlignment="Top" PlaceholderText="Password"/>
             <Grid Margin="0" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
