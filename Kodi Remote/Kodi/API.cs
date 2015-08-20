@@ -36,6 +36,13 @@ namespace Kodi_Remote.Kodi
             return json.ToString();
         }
 
+        public static KeyValuePair<string, IJsonValue> Parameter(string key, KeyValuePair<string, IJsonValue> value)
+        {
+            JsonObject json = new JsonObject();
+            json.Add(value.Key, value.Value);
+            return new KeyValuePair<string, IJsonValue>(key, json);
+        }
+
         public static KeyValuePair<string, IJsonValue> Parameter(string key, IJsonValue value)
         {
             return new KeyValuePair<string, IJsonValue>(key, value);

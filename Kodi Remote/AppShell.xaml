@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="Kodi_Remote.AppShell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Kodi_Remote"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid VerticalAlignment="Top">
+            <ToggleButton x:Name="ToggleSidebar" Content="&#xE700;" VerticalAlignment="Top" IsChecked="{Binding IsPaneOpen, ElementName=SplitView, FallbackValue=false, Mode=TwoWay}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26.667"/>
+        </Grid>
+        <SplitView x:Name="SplitView" Margin="0,40,0,0">
+            <SplitView.Pane>
+                <ListView x:Name="Navigation">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:SidebarNavItem">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <FontIcon x:Name="Glyph" FontSize="16" Glyph="{x:Bind SymbolAsChar}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Label}"/>
+                                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </SplitView.Pane>
+            <Frame x:Name="content" />
+        </SplitView>
+    </Grid>
+</Page>

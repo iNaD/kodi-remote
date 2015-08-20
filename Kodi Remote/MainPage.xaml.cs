@@ -39,5 +39,30 @@ namespace Kodi_Remote
             MessageDialog messageDialog = new MessageDialog(message);
             await messageDialog.ShowAsync();
         }
+
+        private async void sendToKodi_Click(object sender, RoutedEventArgs e)
+        {
+            var command = new Kodi.YouTube(new Host("osmc"), this.link.Text);
+            var result = await command.fire();
+
+            Debug.WriteLine(result.ToString());
+
+            IJsonValue resultStatus;
+            if (result.GetObject().TryGetValue("result", out resultStatus))
+            {
+                if (resultStatus.GetString() == "OK")
+                {
+                    ShowMessage("Video wird abgespielt.");
+                } else
+                {
+                    ShowMessage("Video konnte nicht abgespielt werden.");
+                }
+            }
+            else
+            {
+                ShowMessage("Video konnte nicht abgespielt werden.");
+            }
+
+        }
     }
 }

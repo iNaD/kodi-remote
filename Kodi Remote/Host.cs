@@ -107,8 +107,7 @@ namespace Kodi_Remote
 
         public async Task<JsonValue> request(String request)
         {
-            request = Uri.EscapeDataString(request);
-            return await this.rpcClient.GET(this.url + "?request=" + request);
+            return await this.rpcClient.POST(this.url, request);
         }
 
         public static Host FromJson(string json)

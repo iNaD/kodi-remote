@@ -9,5 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="button" Content="Mute" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" Click="button_Click"/>
+        <TextBox x:Name="link" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,80,10,0" PlaceholderText="Link"/>
+        <Button x:Name="sendToKodi" Content="Send to Kodi" HorizontalAlignment="Stretch" Margin="10,117,10,0" VerticalAlignment="Top" Click="sendToKodi_Click"/>
     </Grid>
 </Page>
