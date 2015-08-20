@@ -30,9 +30,24 @@ namespace Kodi_Remote.Views
         private async void button_Click(object sender, RoutedEventArgs e)
         {
             var command = new Kodi.Mute(new Host("osmc"));
-            var result = await command.fire();
+            await command.Fire();
 
-            ShowMessage(result.ToString());
+            if(command.Ok())
+            {
+                if((bool) command.Result() == true)
+                {
+                    ShowMessage("Muted");
+                } else if((bool)command.Result() == false)
+                {
+                    ShowMessage("Unmuted");
+                } else
+                {
+                    ShowMessage("Unknown response");
+                }
+            } else
+            {
+                ShowMessage("Toggle Mute failed");
+            }
         }
         private async void ShowMessage(string message)
         {
@@ -43,26 +58,14 @@ namespace Kodi_Remote.Views
         private async void sendToKodi_Click(object sender, RoutedEventArgs e)
         {
             var command = new Kodi.YouTube(new Host("osmc"), this.link.Text);
-            var result = await command.fire();
+            await command.Fire();
 
-            Debug.WriteLine(result.ToString());
-
-            IJsonValue resultStatus;
-            if (result.GetObject().TryGetValue("result", out resultStatus))
+            if (command.Ok() && (bool)command.Result())
             {
-                if (resultStatus.GetString() == "OK")
-                {
-                    ShowMessage("Video wird abgespielt.");
-                } else
-                {
-                    ShowMessage("Video konnte nicht abgespielt werden.");
-                }
-            }
-            else
-            {
-                ShowMessage("Video konnte nicht abgespielt werden.");
+                ShowMessage("Playing video");
             }
 
+             ShowMessage("Couldn't play video");
         }
     }
 }

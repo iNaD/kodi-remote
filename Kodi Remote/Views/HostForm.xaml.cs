@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Data.Json;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
 
 namespace Kodi_Remote.Views
 {
@@ -33,9 +21,8 @@ namespace Kodi_Remote.Views
         {
             base.OnNavigatedTo(e);
 
-            Debug.WriteLine("Got Host data");
-
             Host host = e.Parameter as Host;
+
             if (host != null)
             {
                 this.hostname.Text = host.hostname;
@@ -62,19 +49,17 @@ namespace Kodi_Remote.Views
             var host = new Host(hostname, port, username, password);
 
             try {
-                var result = await host.request("");
+                var command = new Kodi.TestConnection(host);
+                await command.Fire();
+                if(command.Ok())
+                {
+                    ShowMessage("Connection successfull\nVersion: " + command.Result().ToString());
+                    return;
+                }
 
-                IJsonValue version;
-                if (result.GetObject().TryGetValue("version", out version))
-                {
-                    Debug.WriteLine("Version: " + version.ToString());
-                    ShowMessage("Connection successfull\nVersion: " + version.ToString());
-                }
-                else
-                {
-                    ShowMessage("Target seems not to be an instance of Kodi/XBMC.");
-                }
-            } catch(HttpRequestException exception)
+                ShowMessage("Target seems not to be an instance of Kodi/XBMC.");
+
+            } catch(Exception)
             {
                 ShowMessage("Failed to connection. Please review your provided data.");
             }

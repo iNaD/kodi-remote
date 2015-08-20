@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,55 +15,58 @@ namespace Kodi_Remote.Kodi
     {
 
         private static readonly string jsonrpcVersion = "2.0";
-        
-        public static string Build(string method, JsonObject parameters, string id)
+        private static readonly string defaultId = "1";
+
+        public static Dictionary<string, object> Init(string method)
         {
-            return _Build(method, parameters, id);
+            return Init(method, new Dictionary<string, object> { });
         }
 
-        public static string Build(string method, JsonObject parameters)
+        public static Dictionary<string, object> Init(string method, Dictionary<string, object> parameters)
         {
-            return _Build(method, parameters, "1");
+            return Init(method, parameters, defaultId);
         }
 
-        private static string _Build(string method, JsonObject parameters, string id)
+        public static Dictionary<string, object> Init(string method, Dictionary<string, object> parameters, string id)
         {
-            JsonObject json = new JsonObject();
-            json.Add("jsonrpc", JsonValue.CreateStringValue(jsonrpcVersion));
-            json.Add("method", JsonValue.CreateStringValue(method));
-            json.Add("params", parameters);
-            json.Add("id", JsonValue.CreateStringValue(id));
-
-            return json.ToString();
-        }
-
-        public static KeyValuePair<string, IJsonValue> Parameter(string key, KeyValuePair<string, IJsonValue> value)
-        {
-            JsonObject json = new JsonObject();
-            json.Add(value.Key, value.Value);
-            return new KeyValuePair<string, IJsonValue>(key, json);
-        }
-
-        public static KeyValuePair<string, IJsonValue> Parameter(string key, IJsonValue value)
-        {
-            return new KeyValuePair<string, IJsonValue>(key, value);
-        }
-
-        public static KeyValuePair<string, IJsonValue> Parameter(string key, string value)
-        {
-            return new KeyValuePair<string, IJsonValue>(key, JsonValue.CreateStringValue(value));
-        }
-
-        public static JsonObject Parameters(params KeyValuePair<string,IJsonValue>[] parameters)
-        {
-            JsonObject json = new JsonObject();
-
-            foreach(KeyValuePair<string, IJsonValue> parameter in parameters)
+            return new Dictionary<string, object>
             {
-                json.Add(parameter.Key, parameter.Value);
+                { "id", id },
+                { "jsonrpc", jsonrpcVersion },
+                { "method", method },
+                { "params", parameters }
+            };
+        }
+
+        public static Dictionary<string, object> Parameters(params KeyValuePair<string, object>[] parameters)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            foreach(KeyValuePair<string, object> parameter in parameters)
+            {
+                dict.Add(parameter.Key, parameter.Value);
             }
 
-            return json;
+            return dict;
+        }
+
+        public static KeyValuePair<string, object> Parameter(string key, object value)
+        {
+            return new KeyValuePair<string, object>(key, value);
+        }
+
+        public static string ToJson(object dict)
+        {
+            return JsonConvert.SerializeObject(dict);
+        }
+
+        public static async Task<IJsonValue> Request(Host host, object json)
+        {
+            string request = API.ToJson(json);
+
+            Debug.WriteLine(request);
+
+            return await host.request(request);
         }
 
     }

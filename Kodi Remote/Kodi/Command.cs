@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.Data.Json;
 
 namespace Kodi_Remote.Kodi
 {
-    abstract class Command
+    interface ICommand
     {
-        abstract public Task<JsonValue> fire();
+
+        Task<IJsonValue> Fire();
+
+        bool Ok();
+
+        object Result();
 
     }
 }

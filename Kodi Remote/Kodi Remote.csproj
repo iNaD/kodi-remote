@@ -102,6 +102,7 @@
     <Compile Include="Controls\NavListView.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HostListItem.cs" />
+    <Compile Include="Kodi\TestConnection.cs" />
     <Compile Include="Views\HostListing.xaml.cs">
       <DependentUpon>HostListing.xaml</DependentUpon>
     </Compile>

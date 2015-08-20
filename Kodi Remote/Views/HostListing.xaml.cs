@@ -41,9 +41,13 @@ namespace Kodi_Remote.Views
 
         private void HostsList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Debug.WriteLine("Item clicked");
             HostListItem item = (HostListItem) e.ClickedItem;
             AppShell.Current.AppFrame.Navigate(typeof(HostForm), item.Host);
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            AppShell.Current.AppFrame.Navigate(typeof(HostForm));
         }
     }
 }

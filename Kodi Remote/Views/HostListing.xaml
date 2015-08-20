@@ -20,7 +20,12 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView x:Name="HostsList" Margin="10" ItemTemplate="{StaticResource HostListItem}" ItemClick="HostsList_ItemClick" IsItemClickEnabled="True"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="HostsList" ItemTemplate="{StaticResource HostListItem}" Grid.Row="0" ItemClick="HostsList_ItemClick" IsItemClickEnabled="True" Margin="0,0,0,10"/>
+        <Button x:Name="button" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Grid.Row="1" Content="Add Host" Click="button_Click" />
     </Grid>
 </Page>
