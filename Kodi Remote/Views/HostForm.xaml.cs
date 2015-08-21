@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Windows.Data.Json;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +9,8 @@ namespace Kodi_Remote.Views
 {
     public sealed partial class HostForm : Page
     {
+
+        private Host host;
 
         public HostForm()
         {
@@ -25,10 +26,13 @@ namespace Kodi_Remote.Views
 
             if (host != null)
             {
+                this.host = host;
+                this.label.Text = host.label;
                 this.hostname.Text = host.hostname;
                 this.port.Text = host.port;
                 this.username.Text = host.username;
                 this.password.Password = host.password;
+                this.delete.Visibility = Visibility.Visible;
             }
         }
 
@@ -73,11 +77,28 @@ namespace Kodi_Remote.Views
 
         private void save_Click(object sender, RoutedEventArgs e)
         {
-            Host host = new Host(this.hostname.Text, this.port.Text, this.username.Text, this.password.Password);
+            if(this.host != null)
+            {
+                Settings.hosts.Remove(this.host);
+            }
 
-            Settings.AddHost(host);
+            this.host = new Host(this.label.Text, this.hostname.Text, this.port.Text, this.username.Text, this.password.Password);
+
+            Settings.AddHost(this.host);
 
             Settings.Save();
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.host != null)
+            {
+                Settings.hosts.Remove(this.host);
+
+                Settings.Save();
+            }
+
+            AppShell.Current.AppFrame.Navigate(typeof(HostListing));
         }
     }
 }

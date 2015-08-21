@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace Kodi_Remote
@@ -25,6 +20,7 @@ namespace Kodi_Remote
             LoadHosts();
         }
 
+        #region Hosts
         public static HashSet<Host> hosts { get; private set; }
 
         public static bool AddHost(Host host)
@@ -49,6 +45,14 @@ namespace Kodi_Remote
                 stream.Position = 0;
 
                 hosts = (HashSet<Host>)serializer.ReadObject(stream);
+
+                foreach(Host host in hosts)
+                {
+                    if(host.label == null)
+                    {
+                        host.SetLabel(host.hostname);
+                    }
+                }
             }
 
         }
@@ -69,6 +73,7 @@ namespace Kodi_Remote
         {
             localSettings.Values["hosts"] = HostsToJson();
         }
+        #endregion
 
         public static void Save()
         {

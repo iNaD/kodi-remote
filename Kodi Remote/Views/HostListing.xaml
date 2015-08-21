@@ -8,14 +8,14 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="HostListItem" x:DataType="local:HostListItem">
+        <DataTemplate x:Key="HostListItem" x:DataType="local:Host">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <FontIcon x:Name="Glyph" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Host.hostname}"/>
-                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Host.hostname}" />
+                <FontIcon x:Name="Glyph" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind label}"/>
+                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind label}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

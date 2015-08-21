@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 
@@ -16,8 +13,13 @@ namespace Kodi_Remote
         private JSONRPCClient rpcClient;
         private string url;
 
-        public Host(string hostname, string port, string username, string password)
+        public Host(string label, string hostname, string port, string username, string password)
         {
+            if(hostname == null || hostname.Length == 0)
+            {
+                throw new ArgumentException("hostname is required");
+            }
+            this.SetLabel(label, hostname);
             this.hostname = hostname;
             this.SetPort(port);
             this.username = username;
@@ -25,23 +27,26 @@ namespace Kodi_Remote
             this.Init();
         }
 
-        public Host(string hostname, string port)
+        public void SetLabel(string label)
         {
-            this.hostname = hostname;
-            this.username = "";
-            this.password = "";
-            this.SetPort(port);
-            this.Init();
+            this.SetLabel(label, "");
         }
 
-        public Host(string hostname)
+        public void SetLabel(string label, string fallback)
         {
-            this.hostname = hostname;
-            this.username = "";
-            this.password = "";
-            this.SetPort("80");
-            this.Init();
+            if(label == null || label.Length == 0)
+            {
+                this.label = fallback;
+            }
+
+            this.label = label;
         }
+
+        public Host(string hostname, string port, string username, string password) : this(hostname, hostname, port, username, password) { }
+
+        public Host(string hostname, string port) : this(hostname, port, "", "") {}
+
+        public Host(string hostname) : this(hostname, "80") { }
 
         private void Init()
         {
@@ -68,9 +73,9 @@ namespace Kodi_Remote
             this.url += "/" + Settings.endpoint;
         }
 
-        private void SetPort(string port)
+        public void SetPort(string port)
         {
-            if (port.Length == 0)
+            if (port == null || port.Length == 0)
             {
                 this.port = "80";
             }
@@ -79,6 +84,9 @@ namespace Kodi_Remote
                 this.port = port;
             }
         }
+
+        [DataMember]
+        public string label { get; private set; }
 
         [DataMember]
         public string hostname { get; private set; }

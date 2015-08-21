@@ -7,21 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Margin="10">
-            <TextBox x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname"/>
-            <TextBox x:Name="port" Margin="0,37,0,0" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" />
-            <TextBox x:Name="username" Margin="0,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username"/>
-            <PasswordBox x:Name="password" Margin="0,111,0,0" VerticalAlignment="Top" PlaceholderText="Password"/>
-            <Grid Margin="0" VerticalAlignment="Bottom">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="connect" Content="Test Connection" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="connect_Click" Margin="0,0,3,0"/>
-                <Button x:Name="save" Content="Save" HorizontalAlignment="Stretch" Margin="3,0,0,0" VerticalAlignment="Bottom" Grid.Column="1" Click="save_Click"/>
-            </Grid>
-        </Grid>
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" x:Name="label" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Label (leave empty to use hostname)" Margin="0,5"/>
+        <TextBox Grid.Row="1" x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname" Margin="0,5"/>
+        <TextBox Grid.Row="2" x:Name="port" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" Margin="0,5" />
+        <TextBox Grid.Row="3" x:Name="username" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username" Margin="0,5"/>
+        <PasswordBox Grid.Row="4" x:Name="password" VerticalAlignment="Top" PlaceholderText="Password" Margin="0,5"/>
+        <Button Grid.Row="6" x:Name="delete" Content="Delete" HorizontalAlignment="Stretch" Margin="0,5" VerticalAlignment="Bottom" Visibility="Collapsed" Click="delete_Click"/>
+        <Button Grid.Row="7" x:Name="save" Content="Save" HorizontalAlignment="Stretch" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="save_Click"/>
     </Grid>
 </Page>
