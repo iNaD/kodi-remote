@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Kodi_Remote.Controls
 {
-    class NavListView : ListView
+    public class NavListView : ListView
     {
         private SplitView splitViewHost;
 

@@ -14,16 +14,18 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" x:Name="label" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Label (leave empty to use hostname)" Margin="0,5"/>
-        <TextBox Grid.Row="1" x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname" Margin="0,5"/>
-        <TextBox Grid.Row="2" x:Name="port" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" Margin="0,5" />
-        <TextBox Grid.Row="3" x:Name="username" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username" Margin="0,5"/>
-        <PasswordBox Grid.Row="4" x:Name="password" VerticalAlignment="Top" PlaceholderText="Password" Margin="0,5"/>
-        <Button Grid.Row="6" x:Name="delete" Content="Delete" HorizontalAlignment="Stretch" Margin="0,5" VerticalAlignment="Bottom" Visibility="Collapsed" Click="delete_Click"/>
-        <Button Grid.Row="7" x:Name="save" Content="Save" HorizontalAlignment="Stretch" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="save_Click"/>
+        <TextBox Grid.Row="0" x:Name="label" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Label (leave empty to use hostname)" Margin="0,5" ToolTipService.ToolTip="To identify the installations of Kodi/XBMC (e.g. &quot;Living Room&quot;, &quot;Bedroom&quot;)"/>
+        <TextBox Grid.Row="1" x:Name="hostname" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Hostname" Margin="0,5" ToolTipService.ToolTip="The IP or Hostname of the Kodi/XBMC installation"/>
+        <TextBox Grid.Row="2" x:Name="port" TextWrapping="Wrap" Text="" PlaceholderText="Port" InputScope="Digits" VerticalAlignment="Top" Margin="0,5" ToolTipService.ToolTip="If you defined a different Port for Kodi/XBMC" />
+        <TextBox Grid.Row="3" x:Name="username" TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Username (optional)" Margin="0,5" ToolTipService.ToolTip="If you configured a username for Kodi/XBMC"/>
+        <PasswordBox Grid.Row="4" x:Name="password" VerticalAlignment="Top" PlaceholderText="Password (optional)" Margin="0,5" ToolTipService.ToolTip="If you configured a password for Kodi/XBMC"/>
+        <ToggleSwitch Grid.Row="5" x:Name="isDefault" Header="Default Host" VerticalAlignment="Top" Margin="0,5" HorizontalAlignment="Stretch" OffContent="No" OnContent="Yes" ToolTipService.ToolTip="Is this the default Host to control and share to?" />
+        <Button Grid.Row="7" x:Name="delete" Content="Delete" HorizontalAlignment="Stretch" Margin="0,5" VerticalAlignment="Bottom" Visibility="Collapsed" Click="delete_Click"/>
+        <Button Grid.Row="8" x:Name="save" Content="Save" HorizontalAlignment="Stretch" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="save_Click"/>
     </Grid>
 </Page>

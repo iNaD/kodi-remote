@@ -26,7 +26,8 @@ namespace Kodi_Remote
                 {
                     Label = "Home",
                     Symbol = Symbol.Home,
-                    DestPage = typeof(Views.MainPage)
+                    DestPage = typeof(Views.MainPage),
+                    Default = true
                 },
                 new SidebarNavItem()
                 {
@@ -51,6 +52,11 @@ namespace Kodi_Remote
 
             this.Navigation.ItemsSource = this.navlist;
         }
+        
+        public List<SidebarNavItem> GetNavlist()
+        {
+            return this.navlist;
+        }
 
         public Frame AppFrame { get { return this.content; } }
 
@@ -73,6 +79,11 @@ namespace Kodi_Remote
                     this.AppFrame.Navigate(item.DestPage, item.Arguments);
                 }
             }
+        }
+
+        public NavListView GetNavigation()
+        {
+            return this.Navigation;
         }
 
         /// <summary>

@@ -100,6 +100,9 @@ namespace Kodi_Remote
         [DataMember]
         public string password { get; private set; }
 
+        [DataMember]
+        public bool isDefault { get; set; }
+
         public string ToJson()
         {
             MemoryStream stream = new MemoryStream();

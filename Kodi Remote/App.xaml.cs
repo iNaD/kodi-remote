@@ -62,7 +62,26 @@ namespace Kodi_Remote
                 // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
                 // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
                 // übergeben werden
-                shell.AppFrame.Navigate(typeof(Views.MainPage), e.Arguments);
+                var defaultItem = shell.GetNavlist().Find(
+                    delegate (SidebarNavItem item)
+                    {
+                        return item.Default == true;
+                    }
+                );
+
+                Type defaultType;
+
+                if(defaultItem == null)
+                {
+                    defaultType = typeof(Views.MainPage);
+                }
+                else
+                {
+                    defaultType = defaultItem.DestPage;
+                    shell.GetNavigation().SelectedItem = defaultItem;
+                }
+
+                shell.AppFrame.Navigate(defaultType, e.Arguments);
             }
             // Sicherstellen, dass das aktuelle Fenster aktiv ist
             Window.Current.Activate();

@@ -69,6 +69,32 @@ namespace Kodi_Remote
             return reader.ReadToEnd();
         }
 
+        public static Host DefaultHost()
+        {
+            foreach (Host host in Settings.hosts)
+            {
+                if (host.isDefault == true)
+                {
+                    return host;
+                }
+            }
+
+            return null;
+        }
+
+        public static bool DifferentDefaultHostExists(Host check)
+        {
+            foreach (Host host in Settings.hosts)
+            {
+                if (!host.Equals(check) && host.isDefault == true)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static void SaveHosts()
         {
             localSettings.Values["hosts"] = HostsToJson();
@@ -78,6 +104,16 @@ namespace Kodi_Remote
         public static void Save()
         {
             SaveHosts();
+        }
+
+        public static bool HasDefaultHost()
+        {
+            if(Settings.DefaultHost() == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

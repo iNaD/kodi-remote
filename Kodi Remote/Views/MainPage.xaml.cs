@@ -15,7 +15,12 @@ namespace Kodi_Remote.Views
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            var command = new Kodi.Mute(new Host("osmc"));
+            if(this.DefaultHostRequired() == false)
+            {
+                return;
+            }
+
+            var command = new Kodi.Mute(Settings.DefaultHost());
             await command.Fire();
 
             if(command.Ok())
@@ -43,7 +48,12 @@ namespace Kodi_Remote.Views
 
         private async void sendToKodi_Click(object sender, RoutedEventArgs e)
         {
-            var command = new Kodi.YouTube(new Host("osmc"), this.link.Text);
+            if (this.DefaultHostRequired() == false)
+            {
+                return;
+            }
+
+            var command = new Kodi.YouTube(Settings.DefaultHost(), this.link.Text);
             await command.Fire();
 
             if (command.Ok() && (bool)command.Result())
@@ -53,5 +63,17 @@ namespace Kodi_Remote.Views
 
              ShowMessage("Couldn't play video");
         }
+
+        private bool DefaultHostRequired()
+        {
+            if(Settings.HasDefaultHost() == false)
+            {
+                ShowMessage("A default host is required. Please specify one in the Hosts section.");
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

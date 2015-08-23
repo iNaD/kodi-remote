@@ -8,16 +8,33 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="HostListItem" x:DataType="local:Host">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <FontIcon x:Name="Glyph" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind label}"/>
-                <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind label}" />
-            </Grid>
-        </DataTemplate>
+        <local:HostListItemTemplateSelector x:Key="HostListItemTemplate">
+            <local:HostListItemTemplateSelector.Template>
+                <DataTemplate x:DataType="local:Host">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon x:Name="Glyph" Grid.Column="0" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind label}"/>
+                        <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind label}" />
+                    </Grid>
+                </DataTemplate>
+            </local:HostListItemTemplateSelector.Template>
+            <local:HostListItemTemplateSelector.DefaultTemplate>
+                <DataTemplate x:DataType="local:Host">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" FontSize="16" Glyph="&#xe0a5;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind label}"/>
+                        <TextBlock x:Name="Text" Grid.Column="2" Text="{x:Bind label}" />
+                    </Grid>
+                </DataTemplate>
+            </local:HostListItemTemplateSelector.DefaultTemplate>
+        </local:HostListItemTemplateSelector>
+
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
@@ -25,7 +42,13 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="HostsList" ItemTemplate="{StaticResource HostListItem}" Grid.Row="0" ItemClick="HostsList_ItemClick" IsItemClickEnabled="True" Margin="0,0,0,10"/>
+        <ListView x:Name="HostsList"
+                  ItemTemplateSelector="{StaticResource HostListItemTemplate}"
+                  Grid.Row="0"
+                  ItemClick="HostsList_ItemClick"
+                  IsItemClickEnabled="True"
+                  Margin="0,0,0,10"
+                  Header="Hosts"/>
         <Button x:Name="button" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Grid.Row="1" Content="Add Host" Click="button_Click" />
     </Grid>
 </Page>

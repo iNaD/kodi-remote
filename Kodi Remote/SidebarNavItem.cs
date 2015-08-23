@@ -22,6 +22,8 @@ namespace Kodi_Remote
         public Type DestPage { get; set; }
         public object Arguments { get; set; }
 
+        public bool Default { get; set; } = false;
+
         public SidebarNavItem()
         {
 
