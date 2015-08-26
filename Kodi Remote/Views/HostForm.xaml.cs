@@ -18,7 +18,7 @@ namespace Kodi_Remote.Views
             this.InitializeComponent();
         }
 
-        protected void setHost(Host host)
+        private void setHost(Host host)
         {
             this.host = host;
             this.label.Text = host.label;

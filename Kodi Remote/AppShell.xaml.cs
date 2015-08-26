@@ -51,6 +51,11 @@ namespace Kodi_Remote
             };
 
             this.Navigation.ItemsSource = this.navlist;
+            this.HostSelector.ItemsSource = Settings.hosts;
+
+            if (Settings.HasDefaultHost()) {
+                this.HostSelector.SelectedItem = Settings.DefaultHost();
+            }
         }
         
         public List<SidebarNavItem> GetNavlist()

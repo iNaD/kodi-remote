@@ -32,6 +32,8 @@
                     <VisualState.Setters>
                         <Setter Target="SplitView.DisplayMode" Value="CompactInline"/>
                         <Setter Target="SplitView.IsPaneOpen" Value="True"/>
+                        <!-- TODO: Change to width - PangeLength -->
+                        <Setter Target="HostSelectorColumn.Width" Value="1*"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -40,15 +42,39 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SplitView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="HostSelectorColumn.Width" Value="1*"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         
         <Grid VerticalAlignment="Top">
-            <ToggleButton x:Name="ToggleSidebar" Style="{StaticResource SplitViewTogglePaneButtonStyle}" IsChecked="{Binding IsPaneOpen, ElementName=SplitView, FallbackValue=false, Mode=TwoWay}"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition x:Name="HostSelectorColumn"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton Grid.Column="0" x:Name="ToggleSidebar" Style="{StaticResource SplitViewTogglePaneButtonStyle}" IsChecked="{Binding IsPaneOpen, ElementName=SplitView, FallbackValue=false, Mode=TwoWay}"/>
+            <ComboBox Grid.Column="1" 
+                      x:Name="HostSelector" 
+                      HorizontalAlignment="Stretch"
+                      Margin="0"
+                      VerticalAlignment="Stretch" 
+                      PlaceholderText="Select a Host">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="local:Host">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon x:Name="Glyph" Grid.Column="0" FontSize="16" Glyph="&#xe8ce;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind label}"/>
+                            <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind label}" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
-        <SplitView x:Name="SplitView" DisplayMode="Inline" IsTabStop="False" Margin="0,48,0,0">
+        <SplitView x:Name="SplitView" DisplayMode="Inline" IsTabStop="False" Margin="0,48,0,0" IsPaneOpen="True">
             <SplitView.Pane>
                 <controls:NavListView x:Name="Navigation"
                                       ContainerContentChanging="NavMenuItemContainerContentChanging"
