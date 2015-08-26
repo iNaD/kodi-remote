@@ -18,6 +18,19 @@ namespace Kodi_Remote.Views
             this.InitializeComponent();
         }
 
+        protected void setHost(Host host)
+        {
+            this.host = host;
+            this.label.Text = host.label;
+            this.hostname.Text = host.hostname;
+            this.port.Text = host.port;
+            this.username.Text = host.username;
+            this.password.Password = host.password;
+            this.isDefault.IsOn = host.isDefault;
+
+            this.delete.Visibility = Visibility.Visible;
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -26,23 +39,16 @@ namespace Kodi_Remote.Views
 
             if (host != null)
             {
-                this.host = host;
-                this.label.Text = host.label;
-                this.hostname.Text = host.hostname;
-                this.port.Text = host.port;
-                this.username.Text = host.username;
-                this.password.Password = host.password;
-                this.delete.Visibility = Visibility.Visible;
-                this.isDefault.IsOn = host.isDefault;
+                this.setHost(host);
             }
         }
 
         private async Task<bool> TestConnection()
         {
-            string hostname = this.hostname.Text;
-            string port = this.port.Text;
-            string username = this.username.Text;
-            string password = this.password.Password;
+            string hostname = this.hostname.Text.Trim();
+            string port = this.port.Text.Trim();
+            string username = this.username.Text.Trim();
+            string password = this.password.Password.Trim();
 
             var host = new Host(hostname, port, username, password);
 
@@ -87,21 +93,21 @@ namespace Kodi_Remote.Views
                 Settings.hosts.Remove(this.host);
             }
 
-            this.host = new Host(this.label.Text, this.hostname.Text, this.port.Text, this.username.Text, this.password.Password);
-            this.host.isDefault = this.isDefault.IsOn;
+            var host = new Host(this.label.Text.Trim(), this.hostname.Text.Trim(), this.port.Text.Trim(), this.username.Text, this.password.Password.Trim());
+            host.isDefault = this.isDefault.IsOn;
 
-            Settings.AddHost(this.host);
+            Settings.AddHost(host);
 
             Settings.Save();
 
-            this.delete.Visibility = Visibility.Visible;
+            this.setHost(host);
 
             ShowMessage("Host saved.");
         }
 
         private bool Validate()
         {
-            var hostname = this.hostname.Text;
+            var hostname = this.hostname.Text.Trim();
 
             if (hostname.Length == 0)
             {
@@ -127,6 +133,8 @@ namespace Kodi_Remote.Views
                 Settings.hosts.Remove(this.host);
 
                 Settings.Save();
+
+                this.host = null;
             }
 
             AppShell.Current.AppFrame.Navigate(typeof(HostListing));

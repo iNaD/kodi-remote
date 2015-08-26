@@ -8,7 +8,7 @@ using Windows.Data.Json;
 namespace Kodi_Remote
 {
     [DataContract]
-    class Host
+    public class Host
     {
         private JSONRPCClient rpcClient;
         private string url;
@@ -34,12 +34,14 @@ namespace Kodi_Remote
 
         public void SetLabel(string label, string fallback)
         {
-            if(label == null || label.Length == 0)
+            if (label == null || label.Length == 0)
             {
                 this.label = fallback;
             }
-
-            this.label = label;
+            else
+            {
+                this.label = label;
+            }
         }
 
         public Host(string hostname, string port, string username, string password) : this(hostname, hostname, port, username, password) { }
