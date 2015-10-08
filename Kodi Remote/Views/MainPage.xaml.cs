@@ -15,7 +15,7 @@ namespace Kodi_Remote.Views
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            if(this.DefaultHostRequired() == false)
+            if(Helpers.DefaultHostRequired() == false)
             {
                 return;
             }
@@ -27,28 +27,23 @@ namespace Kodi_Remote.Views
             {
                 if((bool) command.Result() == true)
                 {
-                    ShowMessage("Muted");
+                    Helpers.ShowMessage("Muted");
                 } else if((bool)command.Result() == false)
                 {
-                    ShowMessage("Unmuted");
+                    Helpers.ShowMessage("Unmuted");
                 } else
                 {
-                    ShowMessage("Unknown response");
+                    Helpers.ShowMessage("Unknown response");
                 }
             } else
             {
-                ShowMessage("Toggle Mute failed");
+                Helpers.ShowMessage("Toggle Mute failed");
             }
-        }
-        private async void ShowMessage(string message)
-        {
-            MessageDialog messageDialog = new MessageDialog(message);
-            await messageDialog.ShowAsync();
         }
 
         private async void sendToKodi_Click(object sender, RoutedEventArgs e)
         {
-            if (this.DefaultHostRequired() == false)
+            if (Helpers.DefaultHostRequired() == false)
             {
                 return;
             }
@@ -58,21 +53,10 @@ namespace Kodi_Remote.Views
 
             if (command.Ok() && (bool)command.Result())
             {
-                ShowMessage("Playing video");
+                Helpers.ShowMessage("Playing video");
             }
 
-             ShowMessage("Couldn't play video");
-        }
-
-        private bool DefaultHostRequired()
-        {
-            if(Settings.HasDefaultHost() == false)
-            {
-                ShowMessage("A default host is required. Please specify one in the Hosts section.");
-                return false;
-            }
-
-            return true;
+            Helpers.ShowMessage("Couldn't play video");
         }
 
     }

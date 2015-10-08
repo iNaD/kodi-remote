@@ -1,6 +1,8 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
@@ -110,6 +112,31 @@ namespace Kodi_Remote
             //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
             Settings.Save();
             deferral.Complete();
+        }
+
+        protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
+        {
+            ShareOperation shareOperation = args.ShareOperation;
+            if (shareOperation.Data.Contains(StandardDataFormats.WebLink))
+            {
+                Uri link = await shareOperation.Data.GetWebLinkAsync();
+
+                if (Helpers.DefaultHostRequired() == false)
+                {
+                    return;
+                }
+
+                var command = new Kodi.YouTube(Settings.DefaultHost(), link.ToString());
+                await command.Fire();
+
+                if (command.Ok() && (bool)command.Result())
+                {
+                    Helpers.ShowMessage("Playing video");
+                }
+
+                Helpers.ShowMessage("Couldn't play video");
+            }
+
         }
     }
 }

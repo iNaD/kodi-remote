@@ -101,9 +101,11 @@
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavListView.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HostListItemTemplateSelector.cs" />
     <Compile Include="Kodi\TestConnection.cs" />
+    <Compile Include="Kodi\Vimeo.cs" />
     <Compile Include="Views\HostListing.xaml.cs">
       <DependentUpon>HostListing.xaml</DependentUpon>
     </Compile>

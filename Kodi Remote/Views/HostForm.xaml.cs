@@ -60,20 +60,14 @@ namespace Kodi_Remote.Views
                     return true;
                 }
 
-                ShowMessage("Target seems not to be an instance of Kodi/XBMC.");
+                Helpers.ShowMessage("Target seems not to be an instance of Kodi/XBMC.");
 
             } catch(Exception)
             {
-                ShowMessage("Failed to connect. Please review your provided data.");
+                Helpers.ShowMessage("Failed to connect. Please review your provided data.");
             }
 
             return false;
-        }
-
-        private async void ShowMessage(string message)
-        {
-            MessageDialog messageDialog = new MessageDialog(message);
-            await messageDialog.ShowAsync();
         }
 
         private async void save_Click(object sender, RoutedEventArgs e)
@@ -102,7 +96,7 @@ namespace Kodi_Remote.Views
 
             this.setHost(host);
 
-            ShowMessage("Host saved.");
+            Helpers.ShowMessage("Host saved.");
         }
 
         private bool Validate()
@@ -111,7 +105,7 @@ namespace Kodi_Remote.Views
 
             if (hostname.Length == 0)
             {
-                ShowMessage("The hostname is required.");
+                Helpers.ShowMessage("The hostname is required.");
                 return false;
             }
 
@@ -119,7 +113,7 @@ namespace Kodi_Remote.Views
 
             if(isDefault == true && Settings.DifferentDefaultHostExists(this.host) == true)
             {
-                ShowMessage("Only one host could be set as default host. If you want to make this host the default host, change \"" + Settings.DefaultHost().label + "\" first.");
+                Helpers.ShowMessage("Only one host could be set as default host. If you want to make this host the default host, change \"" + Settings.DefaultHost().label + "\" first.");
                 return false;
             }
 
